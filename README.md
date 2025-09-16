@@ -1,110 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>MX-5 Lemonade Goal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      color: #d32f2f;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .input-group {
-      margin: 15px 0;
-    }
-    input {
-      padding: 10px;
-      width: 100px;
-      font-size: 16px;
-      margin-left: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #388e3c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #2e7d32;
-    }
-    .result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .images {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    .images img {
-      width: 250px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MX-5 Lemon & Juice Sale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            margin: 20px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        .progress-container {
+            width: 80%;
+            background-color: #eee;
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 30px;
+            width: 0%;
+            background-color: #4caf50;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+        }
+        input {
+            width: 60px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>MX-5 Lemonade Goal Tracker</h1>
-    <p>目标金额: RM150,000</p>
-    <p>Lemonade 一杯赚 RM2 | Fresh Juice 一杯赚 RM2.5</p>
-
-    <div class="input-group">
-      <label>卖出的 Lemonade (杯): </label>
-      <input type="number" id="lemonade" value="0">
+    <h1>MX-5 Lemon & Juice Sale</h1>
+    
+    <p>目标：购买 MX-5（假设价格 3000 SGD）</p>
+    
+    <div>
+        <label>卖出柠檬水数量（杯）: <input type="number" id="lemon" value="0"></label><br><br>
+        <label>卖出果蔬汁数量（杯）: <input type="number" id="juice" value="0"></label><br><br>
+        <button onclick="updateProgress()">更新进度</button>
     </div>
-
-    <div class="input-group">
-      <label>卖出的 Fresh Juice (杯): </label>
-      <input type="number" id="juice" value="0">
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
     </div>
+    
+    <p id="moneyInfo">已赚: 0 SGD / 3000 SGD</p>
+    
+    <h2>看看我们的 MX-5</h2>
+    <img src="50-50-01-ext.jpg" alt="MX-5 Exterior">
+    <img src="50-50-01-holistic.jpg" alt="MX-5 Holistic View">
+    <img src="mx5-manual.png" alt="MX-5 Manual">
 
-    <button onclick="calculate()">计算剩余目标</button>
+    <script>
+        const priceMX5 = 3000; // 目标金额
+        const priceLemon = 3; // 假设每杯柠檬水 3 SGD
+        const priceJuice = 5; // 每杯果蔬汁 5 SGD
 
-    <div class="result" id="result"></div>
+        function updateProgress() {
+            const lemonCount = parseInt(document.getElementById('lemon').value) || 0;
+            const juiceCount = parseInt(document.getElementById('juice').value) || 0;
 
-    <div class="images">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Mazda_MX-5_RF_IMG_2683.jpg" alt="MX-5 1">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/2018_Mazda_MX-5_%28ND2%29_RF_hardtop_convertible_%282018-10-12%29_01.jpg" alt="MX-5 2">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Mazda_MX-5_%28ND%29_%E2%80%93_Frontansicht%2C_1._August_2015%2C_D%C3%BCsseldorf.jpg" alt="MX-5 3">
-    </div>
-  </div>
-
-  <script>
-    function calculate() {
-      const lemonade = parseInt(document.getElementById('lemonade').value) || 0;
-      const juice = parseInt(document.getElementById('juice').value) || 0;
-
-      const earnings = lemonade * 2 + juice * 2.5;
-      const goal = 150000;
-      const remaining = goal - earnings;
-
-      let message;
-      if (remaining > 0) {
-        message = `你已经赚了 RM${earnings.toFixed(2)}，还差 RM${remaining.toFixed(2)} 才能买 MX-5 🚗`;
-      } else {
-        message = `恭喜！你已经赚够 RM${earnings.toFixed(2)} 买 MX-5 🚗🎉`;
-      }
-
-      document.getElementById('result').innerText = message;
-    }
-  </script>
+            const totalMoney = lemonCount * priceLemon + juiceCount * priceJuice;
+            let percent = Math.min((totalMoney / priceMX5) * 100, 100);
+            
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressBar').textContent = Math.floor(percent) + '%';
+            document.getElementById('moneyInfo').textContent = `已赚: ${totalMoney} SGD / ${priceMX5} SGD`;
+        }
+    </script>
 </body>
 </html>
+
